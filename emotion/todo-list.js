@@ -61,6 +61,7 @@ export const TodoList = ({ addItem, removeItem, checkItem, items }) => (
       }}
     >
       <input
+        autocomplete="off"
         css={{
           marginRight: "10px",
           background: "papayawhip",

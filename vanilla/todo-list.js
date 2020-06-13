@@ -17,6 +17,7 @@ export const TodoList = ({ addItem, removeItem, checkItem, items }) => (
       }}
     >
       <input
+        autocomplete="off"
         size="30"
         name="label"
         className="todo-add-input"
