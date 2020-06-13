@@ -55,7 +55,7 @@ export const TodoList = ({ addItem, removeItem, checkItem, items }) => (
               >
                 {iconDelete}
               </div>
-              <div role="button" className="btn todo-list-item-drag-btn">
+              <div role="button" className="todo-list-item-drag-btn">
                 {iconDrag}
               </div>
             </li>
