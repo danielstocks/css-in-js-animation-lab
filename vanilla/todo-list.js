@@ -30,7 +30,7 @@ export const TodoList = ({ addItem, removeItem, checkItem, items }) => (
         return (
           <CSSTransition
             key={item.id}
-            timeout={200}
+            timeout={500}
             classNames="todo-list-item"
           >
             <li

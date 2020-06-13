@@ -33,21 +33,25 @@ body {
 }
 
 .todo-list-item-enter {
+  transform: scale(0);
   opacity: 0;
 }
 
 .todo-list-item-enter-active {
   opacity: 1;
-  transition: opacity 200ms;
+  transform: scale(1);
+  transition: all 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .todo-list-item-exit {
+  transform: scale(1);
   opacity: 1;
 }
 
 .todo-list-item-exit-active {
   opacity: 0;
-  transition: opacity 200ms;
+  transform: scale(0);
+  transition: all 500ms;
 }
 
 .todo-list-item-remove-btn {
@@ -98,18 +102,22 @@ body {
 }
 
 .todo-add-input:focus {
-  border-color: papayawhip;
+  border-color: #c8a67b;
 }
 
 .todo-add-btn {
+  border-radius: 2px;
   border: 1px solid burlywood;
-  background: papayawhip;
+  background: linear-gradient(papayawhip, #ffd6b1);
   height: 50px;
-  padding: 0 20px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-shadow: 1px 0px 0px peachpuff;
+  padding: 0 25px;
   font-size: 16px;
   color: #222;
 }
 .todo-add-btn:hover {
-  border-color: #aaa;
+  border-color: #c8a67b;
   color: #555;
 }
