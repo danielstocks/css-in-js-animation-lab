@@ -3,30 +3,31 @@ import { Transition, TransitionGroup } from "react-transition-group";
 import { iconDelete, iconDrag } from "shared";
 import { css } from "@emotion/core";
 
-function getTransitionStyle(state) {
+function getTransitionStyle(state, i) {
+  const y = i * 57 + "px";
+
   if (state === "entered") {
     return {
-      transform: "scale(1)",
+      transform: `translateY(${y}) scale(1)`,
       opacity: 1,
     };
   }
   if (state === "entering") {
     return {
       opacity: 1,
-      transform: "scale(1)",
+      transform: `translateY(${y}) scale(1)`,
       transition: "all 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275)",
     };
   }
   if (state === "exiting") {
     return {
       opacity: 0,
-      transform: "scale(0)",
-      transition: "all 500ms",
+      transform: `translateY(${y}) scale(0)`,
     };
   }
   if (state === "exited") {
     return {
-      transform: "scale(0)",
+      transform: `translateY(${y}) scale(0)`,
       opacity: "0",
     };
   }
@@ -61,7 +62,7 @@ export const TodoList = ({ addItem, removeItem, checkItem, items }) => (
       }}
     >
       <input
-        autocomplete="off"
+        autoComplete="off"
         css={{
           marginRight: "10px",
           background: "papayawhip",
@@ -100,9 +101,16 @@ export const TodoList = ({ addItem, removeItem, checkItem, items }) => (
         Add
       </button>
     </form>
-    <ul css={{ listStyle: "none", padding: 0 }}>
+    <ul
+      css={{
+        listStyle: "none",
+        position: "relative",
+        padding: 0,
+        height: items.length * 57,
+      }}
+    >
       <TransitionGroup component={null}>
-        {items.map((item) => {
+        {items.map((item, i) => {
           return (
             <Transition
               key={item.id}
@@ -113,11 +121,14 @@ export const TodoList = ({ addItem, removeItem, checkItem, items }) => (
                 return (
                   <li
                     css={{
+                      position: "absolute",
+                      width: "100%",
                       display: "flex",
                       marginBottom: "5px",
                       borderBottom: "1px solid sandybrown",
                       padding: "10px 0",
-                      ...getTransitionStyle(state),
+                      transition: "all 500ms",
+                      ...getTransitionStyle(state, i),
                     }}
                   >
                     <label
