@@ -117,79 +117,87 @@ export const TodoList = ({ addItem, removeItem, checkItem, items }) => (
               timeout={500}
               onEnter={(node) => node.scrollTop}
             >
-              {(state) => {
-                return (
-                  <li
-                    css={{
-                      position: "absolute",
-                      width: "100%",
-                      display: "flex",
-                      marginBottom: "5px",
-                      borderBottom: "1px solid sandybrown",
-                      padding: "10px 0",
-                      transition: "all 500ms",
-                      ...getTransitionStyle(state, i),
-                    }}
-                  >
-                    <label
-                      css={{
-                        display: "flex",
-                        flexGrow: 1,
-                        alignItems: "center",
-                      }}
-                    >
-                      <input
-                        onChange={(e) => {
-                          checkItem(item.id);
-                        }}
-                        type="checkbox"
-                        checked={item.checked}
-                        css={{ marginRight: 10 }}
-                      />
-                      <span
-                        css={{
-                          transition: "200ms all ease-out",
-                          ...(item.checked && {
-                            opacity: 0.2,
-                            textDecoration: "line-through",
-                          }),
-                        }}
-                      >
-                        {item.label}
-                      </span>
-                    </label>
-                    <div
-                      role="button"
-                      onClick={() => removeItem(item.id)}
-                      css={[
-                        btn,
-                        {
-                          marginLeft: "auto",
-                          marginRight: 5,
-                        },
-                      ]}
-                    >
-                      {iconDelete}
-                    </div>
-                    <div
-                      role="button"
-                      css={[
-                        {
-                          padding: 5,
-                          border: "none",
-                          cursor: "move",
-                        },
-                      ]}
-                    >
-                      {iconDrag}
-                    </div>
-                  </li>
-                );
-              }}
+              {(state) => (
+                <TodoItem
+                  state={state}
+                  item={item}
+                  i={i}
+                  checkItem={checkItem}
+                  removeItem={removeItem}
+                />
+              )}
             </Transition>
           );
         })}
       </TransitionGroup>
     </ul>
   </div>
+);
+
+const TodoItem = ({ state, item, checkItem, removeItem, i }) => (
+  <li
+    css={{
+      position: "absolute",
+      width: "100%",
+      display: "flex",
+      marginBottom: "5px",
+      borderBottom: "1px solid sandybrown",
+      padding: "10px 0",
+      transition: "all 500ms",
+      ...getTransitionStyle(state, i),
+    }}
+  >
+    <label
+      css={{
+        display: "flex",
+        flexGrow: 1,
+        alignItems: "center",
+      }}
+    >
+      <input
+        onChange={(e) => {
+          checkItem(item.id);
+        }}
+        type="checkbox"
+        checked={item.checked}
+        css={{ marginRight: 10 }}
+      />
+      <span
+        css={{
+          transition: "200ms all ease-out",
+          ...(item.checked && {
+            opacity: 0.2,
+            textDecoration: "line-through",
+          }),
+        }}
+      >
+        {item.label}
+      </span>
+    </label>
+    <div
+      role="button"
+      onClick={() => removeItem(item.id)}
+      css={[
+        btn,
+        {
+          marginLeft: "auto",
+          marginRight: 5,
+        },
+      ]}
+    >
+      {iconDelete}
+    </div>
+    <div
+      role="button"
+      css={[
+        {
+          padding: 5,
+          border: "none",
+          cursor: "move",
+        },
+      ]}
+    >
+      {iconDrag}
+    </div>
+  </li>
 );
