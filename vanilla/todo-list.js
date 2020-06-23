@@ -1,6 +1,6 @@
 import React from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { iconDelete, iconDrag } from "shared";
+import { iconDelete } from "shared";
 
 export const TodoList = ({ addItem, removeItem, checkItem, items }) => (
   <div>
@@ -17,7 +17,7 @@ export const TodoList = ({ addItem, removeItem, checkItem, items }) => (
       }}
     >
       <input
-        autocomplete="off"
+        autoComplete="off"
         size="30"
         name="label"
         className="todo-add-input"
@@ -26,42 +26,44 @@ export const TodoList = ({ addItem, removeItem, checkItem, items }) => (
       />
       <button className="todo-add-btn">Add</button>
     </form>
-    <TransitionGroup component="ul" className="todo-list">
-      {items.map((item) => {
-        return (
-          <CSSTransition
-            key={item.id}
-            timeout={500}
-            classNames="todo-list-item"
-          >
-            <li
-              className={`todo-list-item ${item.checked ? "is-checked" : ""}`}
+    <ul className="todo-list" style={{ height: 57 * items.length + "px" }}>
+      <TransitionGroup component={null}>
+        {items.map((item, i) => {
+          return (
+            <CSSTransition
+              key={item.id}
+              timeout={500}
+              classNames="todo-list-item"
             >
-              <label className="todo-list-item-label">
-                <input
-                  onChange={(e) => {
-                    checkItem(item.id);
-                  }}
-                  type="checkbox"
-                  checked={item.checked}
-                  className="todo-list-item-checkbox"
-                />
-                <span className="todo-list-item-text">{item.label}</span>
-              </label>
-              <div
-                role="button"
-                onClick={() => removeItem(item.id)}
-                className="btn todo-list-item-remove-btn"
+              <li
+                style={{
+                  "--y": `translateY(${i * 57 + "px"})`,
+                }}
+                className={`todo-list-item ${item.checked ? "is-checked" : ""}`}
               >
-                {iconDelete}
-              </div>
-              <div role="button" className="todo-list-item-drag-btn">
-                {iconDrag}
-              </div>
-            </li>
-          </CSSTransition>
-        );
-      })}
-    </TransitionGroup>
+                <label className="todo-list-item-label">
+                  <input
+                    onChange={(e) => {
+                      checkItem(item.id);
+                    }}
+                    type="checkbox"
+                    checked={item.checked}
+                    className="todo-list-item-checkbox"
+                  />
+                  <span className="todo-list-item-text">{item.label}</span>
+                </label>
+                <div
+                  role="button"
+                  onClick={() => removeItem(item.id)}
+                  className="btn todo-list-item-remove-btn"
+                >
+                  {iconDelete}
+                </div>
+              </li>
+            </CSSTransition>
+          );
+        })}
+      </TransitionGroup>
+    </ul>
   </div>
 );

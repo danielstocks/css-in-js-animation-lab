@@ -6,6 +6,14 @@ function getUniqueId() {
   return fakeUniqueId;
 }
 
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 export const TodoListContainer = (props) => {
   const [items, updateItems] = useState([
     {
@@ -14,8 +22,13 @@ export const TodoListContainer = (props) => {
       id: getUniqueId(),
     },
     {
-      label: "Sleep",
+      label: "Work",
       checked: true,
+      id: getUniqueId(),
+    },
+    {
+      label: "Sleep",
+      checked: false,
       id: getUniqueId(),
     },
     {
@@ -26,7 +39,7 @@ export const TodoListContainer = (props) => {
   ]);
 
   const addItem = (label) => {
-    updateItems([...items, { label, id: getUniqueId(), checked: false }]);
+    updateItems([{ label, id: getUniqueId(), checked: false }, ...items]);
   };
 
   const checkItem = (id) => {
@@ -49,6 +62,11 @@ export const TodoListContainer = (props) => {
     updateItems(newItems);
   };
 
+  const shuffleItems = () => {
+    const newItems = items.slice(0);
+    updateItems(shuffle(newItems));
+  };
+
   return (
     <div>
       {React.cloneElement(props.children, {
@@ -56,6 +74,7 @@ export const TodoListContainer = (props) => {
         removeItem,
         checkItem,
         moveItem,
+        shuffleItems,
         items,
       })}
     </div>

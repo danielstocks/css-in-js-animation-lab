@@ -1,33 +1,34 @@
 import React from "react";
 import { Transition, TransitionGroup } from "react-transition-group";
-import { iconDelete, iconDrag } from "shared";
 import { css } from "@emotion/core";
+import { iconDelete } from "shared";
 
 function getTransitionStyle(state, i) {
   const y = i * 57 + "px";
 
   if (state === "entered") {
     return {
-      transform: `translateY(${y}) scale(1)`,
+      transform: `translate3d(0, ${y}, 0) scale(1)`,
       opacity: 1,
+      transition: "all 500ms",
     };
   }
   if (state === "entering") {
     return {
       opacity: 1,
-      transform: `translateY(${y}) scale(1)`,
+      transform: `translate3d(0, ${y}, 0) scale(1)`,
       transition: "all 500ms cubic-bezier(0.175, 0.885, 0.32, 1.275)",
     };
   }
   if (state === "exiting") {
     return {
       opacity: 0,
-      transform: `translateY(${y}) scale(0)`,
+      transform: `translate3d(0, ${y}, 0) scale(0)`,
     };
   }
   if (state === "exited") {
     return {
-      transform: `translateY(${y}) scale(0)`,
+      transform: `translate3d(0, ${y}, 0) scale(0)`,
       opacity: "0",
     };
   }
@@ -44,7 +45,12 @@ const btn = css`
   }
 `;
 
-export const TodoList = ({ addItem, removeItem, checkItem, items }) => (
+export const TodoList = ({
+  addItem,
+  removeItem,
+  checkItem,
+  items,
+}) => (
   <div>
     <h1>Things to do</h1>
     <form
@@ -106,6 +112,7 @@ export const TodoList = ({ addItem, removeItem, checkItem, items }) => (
         listStyle: "none",
         position: "relative",
         padding: 0,
+        transition: "height 500ms",
         height: items.length * 57,
       }}
     >
@@ -140,10 +147,8 @@ const TodoItem = ({ state, item, checkItem, removeItem, i }) => (
       position: "absolute",
       width: "100%",
       display: "flex",
-      marginBottom: "5px",
       borderBottom: "1px solid sandybrown",
       padding: "10px 0",
-      transition: "all 500ms",
       ...getTransitionStyle(state, i),
     }}
   >
@@ -186,18 +191,6 @@ const TodoItem = ({ state, item, checkItem, removeItem, i }) => (
       ]}
     >
       {iconDelete}
-    </div>
-    <div
-      role="button"
-      css={[
-        {
-          padding: 5,
-          border: "none",
-          cursor: "move",
-        },
-      ]}
-    >
-      {iconDrag}
     </div>
   </li>
 );
